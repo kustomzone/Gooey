@@ -70,12 +70,13 @@ class ConfigPage(ScrolledPanel):
 
         # determine the type of border , if any, the main sizer will use
         if getin(group, ['options', 'show_border'], False):
-            boxDetails = wx.StaticBox(parent, -1, group['name'])
+            boxDetails = wx.StaticBox(parent, -1, group['name'] or '')
             boxSizer = wx.StaticBoxSizer(boxDetails, wx.VERTICAL)
         else:
             boxSizer = wx.BoxSizer(wx.VERTICAL)
             boxSizer.AddSpacer(10)
-            boxSizer.Add(wx_util.h1(parent, group['name']), 0, wx.TOP | wx.BOTTOM | wx.LEFT, 8)
+            if group['name']:
+                boxSizer.Add(wx_util.h1(parent, group['name'] or ''), 0, wx.TOP | wx.BOTTOM | wx.LEFT, 8)
 
         group_description = getin(group, ['description'])
         if group_description:
@@ -83,7 +84,7 @@ class ConfigPage(ScrolledPanel):
             boxSizer.Add(description, 0,  wx.EXPAND | wx.LEFT, 10)
 
         # apply an underline when a grouping border is not specified
-        if not getin(group, ['options', 'show_border'], False):
+        if not getin(group, ['options', 'show_border'], False) and group['name']:
             boxSizer.Add(wx_util.horizontal_rule(parent), 0, wx.EXPAND | wx.LEFT, 10)
 
         ui_groups = self.chunkWidgets(group)

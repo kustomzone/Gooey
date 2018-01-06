@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 
 from gooey.gui import application
 from gooey.gui.util.freeze import getResourcePath
-from util.functional import merge
+from gooey.util.functional import merge
 from . import config_generator
 
 IGNORE_COMMAND = '--ignore-gooey'

@@ -89,7 +89,10 @@ def process(parser, widget_dict, options):
                          if group._group_actions]
     corrected_action_groups = reapply_mutex_groups(mutex_groups, raw_action_groups)
 
-    return categorize2(corrected_action_groups, widget_dict, options)
+    return categorize2(strip_empty(corrected_action_groups), widget_dict, options)
+
+def strip_empty(groups):
+    return [group for group in groups if group['items']]
 
 
 def assert_subparser_constraints(parser):

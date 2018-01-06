@@ -2,6 +2,8 @@ Release TODO
 ============
 
 
+ - [ ] success/error screen given ForceStop should be configurable. Stopping early does not == error
+
  - [X] text encoding
  - [X] pass down the font info to the console
  - [X] pass down the style info to the console

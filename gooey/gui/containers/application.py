@@ -110,7 +110,7 @@ class GooeyApplication(wx.Frame):
     def onStopExecution(self):
         """Displays a scary message and then force-quits the executing
         client code if the user accepts"""
-        if modals.confirmForceStop():
+        if self.buildSpec['showSuccess'] or modals.confirmForceStop():
             self.clientRunner.stop()
 
 
@@ -140,6 +140,8 @@ class GooeyApplication(wx.Frame):
         self.SetSizer(sizer)
         self.console.Hide()
         self.Layout()
+        self.SetIcon(wx.Icon(self.buildSpec['images']['programIcon'], wx.BITMAP_TYPE_ICO))
+
 
 
     def buildNavigation(self):
@@ -216,7 +218,7 @@ class GooeyApplication(wx.Frame):
 
     def showForceStopped(self):
         self.showComplete()
-        self.showError()
+        self.showSuccess()
         self.header.setSubtitle(_('finished_forced_quit'))
 
 

@@ -8,7 +8,13 @@ from itertools import chain, dropwhile
 
 def getin(m, path, default=None):
     """returns the value in a nested dict"""
-    return reduce(lambda acc, val: acc.get(val, {}), path, m) or default
+    keynotfound = ':com.gooey-project/not-found'
+    result = reduce(lambda acc, val: acc.get(val, {keynotfound: None}), path, m)
+    # falsey values like 0 would incorrectly trigger the default to be returned
+    # so the keynotfound val is used to signify a miss vs just a falesy val
+    if isinstance(result, dict) and keynotfound in result:
+        return default
+    return result
 
 
 def assoc(m, key, val):

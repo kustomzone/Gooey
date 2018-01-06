@@ -37,12 +37,13 @@ def create_from_parser(parser, source_path, **kwargs):
         'target':               run_cmd,
         'program_name':         kwargs.get('program_name') or os.path.basename(sys.argv[0]).replace('.py', ''),
         'program_description':  kwargs.get('program_description') or '',
-        'navigation_title':     kwargs.get('navigation_title', 'Actions'),
+        'sidebar_title':        kwargs.get('sidebar_title', 'Actions'),
         'default_size':         kwargs.get('default_size', (610, 530)),
         'auto_start':           kwargs.get('auto_start', False),
         'show_advanced':        kwargs.get('advanced', True),
         'run_validators':       kwargs.get('run_validators', True),
         'encoding':             kwargs.get('encoding', 'utf-8'),
+        'show_stop_warning':    kwargs.get('show_stop_warning', True),
 
         # Legacy/Backward compatibility interop
         'use_legacy_titles':    kwargs.get('use_legacy_titles', True),

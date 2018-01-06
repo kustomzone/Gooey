@@ -23,6 +23,10 @@ class RadioGroup(BaseWidget):
         for button in self.radioButtons:
             button.Bind(wx.EVT_LEFT_DOWN, self.handleButtonClick)
 
+        initialSelection = getin(self.info, ['options', 'initial_selection'], None)
+        if initialSelection is not None:
+            self.radioButtons[initialSelection].SetValue(True)
+
 
     def getValue(self):
         for button, widget in zip(self.radioButtons, self.widgets):

@@ -16,7 +16,7 @@ class Sidebar(wx.Panel):
         self.activeSelection = 0
         self.options = list(self.buildSpec['widgets'].keys())
         self.leftPanel = wx.Panel(self)
-        self.label = wx_util.h1(self.leftPanel, self.buildSpec.get('navigation_title'))
+        self.label = wx_util.h1(self.leftPanel, self.buildSpec.get('sidebar_title'))
         self.listbox = wx.ListBox(self.leftPanel, -1, choices=self.options)
         self.Bind(wx.EVT_LISTBOX, self.swapConfigPanels, self.listbox)
         self.layoutComponent()
