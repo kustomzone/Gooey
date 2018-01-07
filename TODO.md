@@ -3,7 +3,10 @@ Release TODO
 
 
  - [ ] need ability to call out to external seed function for dynamic defaults
-    - [ ]  update readme (SavingOverIt could be example use case)
+    - [ ] update readme (SavingOverIt could be example use case)
+    - [ ] extend this to all types (currently only works for Dropdowns)
+    - [ ] think about stuff. Need a friendly way to specify mappings that's more
+          flexible than options_strings
  - [ ] success/error screen after a ForceStop should be configurable. Stopping early does not necessarily error
 
  - [ ] customizable button text
