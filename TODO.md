@@ -1,7 +1,7 @@
 Release TODO
 ============
 
-
+ - [ ] Fix user supplied directory path when packaged. Currently gives super cryptic failures
  - [ ] need ability to call out to external seed function for dynamic defaults
     - [ ] update readme (SavingOverIt could be example use case)
     - [ ] extend this to all types (currently only works for Dropdowns)
