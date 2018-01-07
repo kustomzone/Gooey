@@ -15,6 +15,14 @@ class Dropdown(TextContainer):
             choices=[default] + self._meta['choices'],
             style=wx.CB_DROPDOWN)
 
+    def setOptions(self, options):
+        prevSelection = self.widget.GetSelection()
+        self.widget.Clear()
+        for option in ['Select Option'] + options:
+            self.widget.Append(option)
+        self.widget.SetSelection(0)
+
+
     def getWidgetValue(self):
         return self.widget.GetValue()
 

@@ -9,8 +9,7 @@ import os
 from functools import partial
 
 from gooey.gui.util.freeze import getResourcePath
-
-
+from gooey.util.functional import merge
 
 filenames = {
     'programIcon': 'program_icon.ico',
@@ -24,7 +23,7 @@ filenames = {
 
 def loadImages(targetDir):
     defaultImages = resolvePaths(getResourcePath('images'), filenames)
-    return {'images': maybePatchImagePaths(targetDir, defaultImages)}
+    return {'images': merge(defaultImages, collectOverrides(targetDir, filenames))}
 
 
 def getImageDirectory(targetDir):
@@ -33,13 +32,9 @@ def getImageDirectory(targetDir):
            else targetDir
 
 
-def maybePatchImagePaths(targetDir, imagemap):
-    '''
-    Overrides the stock images with any custom images
-    found in the user supplied directory
-    '''
-    if targetDir == 'default':
-        return imagemap
+def collectOverrides(targetDir, filenames):
+    if targetDir == '::gooey/default':
+        return {}
 
     pathto = partial(os.path.join, targetDir)
     if not os.path.isdir(targetDir):
@@ -47,7 +42,7 @@ def maybePatchImagePaths(targetDir, imagemap):
             targetDir))
 
     return {varname: pathto(filename)
-            for varname, filename in imagemap.items()
+            for varname, filename in filenames.items()
             if os.path.exists(pathto(filename))}
 
 

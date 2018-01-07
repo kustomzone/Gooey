@@ -117,10 +117,14 @@ class TextContainer(BaseWidget):
     def setErrorString(self, message):
         self.error.SetLabel(message)
         self.error.Wrap(self.Size.width)
+        self.Layout()
 
     def showErrorString(self, b):
         self.error.Wrap(self.Size.width)
         self.error.Show(b)
+
+    def setOptions(self, values):
+        return None
 
     def receiveChange(self, metatdata, value):
         raise NotImplementedError

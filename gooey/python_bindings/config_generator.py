@@ -44,6 +44,7 @@ def create_from_parser(parser, source_path, **kwargs):
         'run_validators':       kwargs.get('run_validators', True),
         'encoding':             kwargs.get('encoding', 'utf-8'),
         'show_stop_warning':    kwargs.get('show_stop_warning', True),
+        'poll_external_updates':kwargs.get('poll_external_updates', False),
 
         # Legacy/Backward compatibility interop
         'use_legacy_titles':    kwargs.get('use_legacy_titles', True),

@@ -19,6 +19,7 @@ from gooey.gui.lang.i18n import _
 from gooey.gui.processor import ProcessController
 from gooey.gui.util.wx_util import transactUI
 from gooey.gui.components import modals
+from gooey.gui import seeder
 
 
 class GooeyApplication(wx.Frame):
@@ -51,6 +52,8 @@ class GooeyApplication(wx.Frame):
         pub.subscribe(events.EXECUTION_COMPLETE, self.onComplete)
         pub.subscribe(events.PROGRESS_UPDATE, self.footer.updateProgressBar)
 
+        if self.buildSpec['poll_external_updates']:
+            self.fetchExternalUpdates()
 
     def onStart(self, *args, **kwarg):
         """
@@ -67,8 +70,10 @@ class GooeyApplication(wx.Frame):
                 self.Layout()
 
     def onEdit(self):
-        """Return the user to the settings screen for futher editing"""
+        """Return the user to the settings screen for further editing"""
         with transactUI(self):
+            if self.buildSpec['poll_external_updates']:
+                self.fetchExternalUpdates()
             self.showSettings()
 
 
@@ -112,6 +117,16 @@ class GooeyApplication(wx.Frame):
         client code if the user accepts"""
         if self.buildSpec['showSuccess'] or modals.confirmForceStop():
             self.clientRunner.stop()
+
+
+    def fetchExternalUpdates(self):
+        seeds = seeder.fetchDynamicProperties(
+            self.buildSpec['target'],
+            self.buildSpec['encoding']
+        )
+        for config in self.configs:
+            config.seedUI(seeds)
+
 
 
     def onCancel(self):

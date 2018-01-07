@@ -15,6 +15,9 @@ class Listbox(TextContainer):
             style=wx.LB_MULTIPLE
         )
 
+    def setOptions(self, options):
+        self.widget.SetChoices()
+
     def setValue(self, values):
         for string in values:
             self.widget.SetStringSelection(string)
@@ -22,7 +25,6 @@ class Listbox(TextContainer):
     def getWidgetValue(self):
         return [self.widget.GetString(index)
                 for index in self.widget.GetSelections()]
-
 
     def formatOutput(self, metadata, value):
         return formatters.listbox(metadata, value)

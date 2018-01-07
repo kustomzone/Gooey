@@ -3,6 +3,7 @@ from wx.lib.scrolledpanel import ScrolledPanel
 
 from gooey.gui.util import wx_util
 from gooey.util.functional import getin, flatmap, merge, compact, indexunique
+from gooey.gui.components.widgets.radio_group import RadioGroup
 
 
 class ConfigPage(ScrolledPanel):
@@ -13,7 +14,16 @@ class ConfigPage(ScrolledPanel):
         self.reifiedWidgets = []
         self.layoutComponent()
         self.widgetsMap = indexunique(lambda x: x._id, self.reifiedWidgets)
+        ## TODO: need to rethink what uniquely identifies an argument.
+        ## Out-of-band IDs, while simple, make talking to the client program difficult
+        ## unless they're agreed upon before hand. Commands, as used here, have the problem
+        ## of (a) not being nearly granular enough (for instance,  `-v` could represent totally different
+        ## things given context/parser position), and (b) cannot identify positional args.
 
+
+    def firstCommandIfPresent(self, widget):
+        commands = widget._meta['commands']
+        return commands[0] if commands else ''
 
     def getPositionalArgs(self):
         return [widget.getValue()['cmd'] for widget in self.reifiedWidgets
@@ -27,6 +37,20 @@ class ConfigPage(ScrolledPanel):
     def isValid(self):
         states = [widget.getValue() for widget in self.reifiedWidgets]
         return not any(compact([state['error'] for state in states]))
+
+
+    def seedUI(self, seeds):
+        radioWidgets = self.indexInternalRadioGroupWidgets()
+        for id, values in seeds.items():
+            if id in self.widgetsMap:
+                self.widgetsMap[id].setOptions(values)
+            if id in radioWidgets:
+                radioWidgets[id].setOptions(values)
+
+    def indexInternalRadioGroupWidgets(self):
+        groups = filter(lambda x: x.info['type'] == 'RadioGroup', self.reifiedWidgets)
+        widgets = flatmap(lambda group: group.widgets, groups)
+        return indexunique(lambda x: x._id, widgets)
 
 
     def displayErrors(self):

@@ -17,7 +17,7 @@ from collections import OrderedDict
 from functools import partial
 from uuid import uuid4
 
-from gooey.util.functional import merge, associn, getin
+from gooey.util.functional import merge, getin
 
 VALID_WIDGETS = (
     'FileChooser',
@@ -72,7 +72,8 @@ def convert(parser, **kwargs):
         'widgets': OrderedDict(
             (choose_name(name, sub_parser), {
                 'command': name,
-                'contents': process(sub_parser,
+                'contents': process(name,
+                                    sub_parser,
                                     getattr(sub_parser, 'widgets', {}),
                                     getattr(sub_parser, 'options', {}))
             }) for name, sub_parser in iter_parsers(parser))
@@ -83,7 +84,7 @@ def convert(parser, **kwargs):
     return x
 
 
-def process(parser, widget_dict, options):
+def process(subparser, parser, widget_dict, options):
     mutex_groups = parser._mutually_exclusive_groups
     raw_action_groups = [extract_groups(group) for group in parser._action_groups
                          if group._group_actions]
@@ -319,7 +320,7 @@ def action_to_json(action, widget, options):
         validator = 'True'
         error_msg = ''
 
-    base =  merge(item_default, {
+    base = merge(item_default, {
         'validator': {
             'test': validator,
             'message': error_msg
@@ -327,7 +328,7 @@ def action_to_json(action, widget, options):
     })
 
     return {
-        'id': str(uuid4()),
+        'id': action.option_strings[0] if action.option_strings else action.dest,
         'type': widget,
         'cli_type': choose_cli_type(action),
         'required': action.required,

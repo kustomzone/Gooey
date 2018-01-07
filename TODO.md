@@ -2,11 +2,15 @@ Release TODO
 ============
 
 
- - [ ] success/error screen given ForceStop should be configurable. Stopping early does not == error
+ - [ ] need ability to call out to external seed function for dynamic defaults
+    - [ ]  update readme (SavingOverIt could be example use case)
+ - [ ] success/error screen after a ForceStop should be configurable. Stopping early does not necessarily error
 
+ - [ ] customizable button text
  - [X] text encoding
  - [X] pass down the font info to the console
  - [X] pass down the style info to the console
+
 
 Issue #234
  - allow general options
@@ -14,21 +18,21 @@ Issue #234
 README:
 
  - update README with all the things
+ - [ ] RadioGroup
+    - [ ] `initial_selection` option
+    - [ ] group name options
+ - [X] validation howto
+ - [ ] advanced layout howto
+ - [ ] turning on/off dialog options
+ - [X] full list of custom widgets and their options
+ - [ ] progress bar management
 
-  - validation howto
-  - advanced layout howto
-  - turning on/off dialog options
-  - full list of custom widgets and their options
 
 Custom Validation:
 
-- make sure user supplied validators fail gracefully and report something useful
-- validator should be able to call outside itself -- either to a separate 
-  cmdline util, or a subset of the host prog
-
-
-
+ - [X] make sure user supplied validators fail gracefully and report something useful
+ - [ ] validator should be able to call outside itself -- either to a separate cmdline util, or a subset of the host prog
 
 
 Later TODO:
- - overview of Gooey for implementers
+ - overview of Gooey for peeps who wanna dev against it
