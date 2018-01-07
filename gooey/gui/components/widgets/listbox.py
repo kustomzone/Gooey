@@ -1,7 +1,7 @@
 from gooey.gui.components.widgets.bases import TextContainer
 import wx
 
-from gui import formatters
+from gooey.gui import formatters
 
 
 class Listbox(TextContainer):
